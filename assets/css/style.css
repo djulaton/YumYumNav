@@ -1,0 +1,14 @@
+.img-circle {
+    border-radius: 50%;
+    float: right;
+}
+
+body {
+    background-image: url('../images/restaurant-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#search-menu {
+    background-color: white;
+}
