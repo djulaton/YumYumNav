@@ -1,6 +1,8 @@
 .img-circle {
     border-radius: 50%;
-    float: right;
+    float: left;
+    margin-right: 20px;
+    margin-top: 20px;
 }
 
 body {
@@ -10,5 +12,10 @@ body {
 }
 
 #search-menu {
-    background-color: white;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.row {
+    margin-left: 324px;
 }
