@@ -1,0 +1,21 @@
+.img-circle {
+    border-radius: 50%;
+    float: left;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+body {
+    background-image: url('../images/restaurant-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#search-menu {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.row {
+    margin-left: 324px;
+}
