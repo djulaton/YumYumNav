@@ -1,28 +1,34 @@
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyAdjOHfLRxKcq4qJt3c6raEsqRwLlr7oVc",
-    authDomain: "yumyumnav.firebaseapp.com",
-    databaseURL: "https://yumyumnav.firebaseio.com",
-    projectId: "yumyumnav",
-    storageBucket: "",
-    messagingSenderId: "947863423856"
-};
-firebase.initializeApp(config);
+$(document).ready(function() {
 
-var database = firebase.database();
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAdjOHfLRxKcq4qJt3c6raEsqRwLlr7oVc",
+        authDomain: "yumyumnav.firebaseapp.com",
+        databaseURL: "https://yumyumnav.firebaseio.com",
+        projectId: "yumyumnav",
+        storageBucket: "",
+        messagingSenderId: "947863423856"
+    };
+    firebase.initializeApp(config);
 
-//################################################
-//set global variables for the input fields
-var zipCode = $("#zip").val().trim();
-var restName = $("#restaurant-name").val().trim();
-var city = $("#city").val().trim();
+    var database = firebase.database();
 
-//after the table is created, with the results from the search, use an onclick event to generate a google maps api map, using the value from the value
+    $("#submit").on("click", function(event) {
+        event.preventDefault();
+        //################################################
+        //set global variables for the input fields
+        var zipCode = $("#zip").val().trim();
+        var restName = $("#restaurant-name").val().trim();
+        var city = $("#city").val().trim();
 
-//Still need onclick event from the table row. 
+        //after the table is created, with the results from the search, use an onclick event to generate a google maps api map, using the value from the value
 
-var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + restName + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
+        //Still need onclick event from the table row. 
 
-//jquery to create an iframe inside the #mapWindow div
-$("#mapWindow").append("<iframe>" + apiResult + "</iframe>");
+        var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + restName + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
+
+        //jquery to create an iframe inside the #mapWindow div
+        $("#mapWindow").append("<iframe>" + apiResult + "</iframe>");
+    });
+});
 
