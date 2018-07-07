@@ -51,6 +51,9 @@ Build a web site that will allow users to enter a city or zip code or restaurant
 - link to reservation via opentable
 - display a google map for the restaurant.
 
+**Link to Design Doc/Mocks:**
+[Design Doc](https://docs.google.com/document/d/12pxr3jAcZ2QpY7Uc72rDMMf4BtPA5D7UMtfCCp1IS48)
+
 **API References:**
 https://opentable.herokuapp.com/<br>
 https://developers.google.com/maps/documentation/javascript/examples/map-simple
