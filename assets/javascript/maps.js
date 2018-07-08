@@ -49,7 +49,7 @@ $(document).ready(function() {
                 
                         $('#search-results').append("<tr class='table-row'>" +
                         "<td class='col-xs-3'>" + image + "</td>" +
-                        "<td class='col-xs-3'>" + name + "</td>" +
+                        "<td class='col-xs-3 openRest'>" + name + "</td>" +
                         "<td class='col-xs-3'>" + address + "</td>" +
                         "<td class='col-xs-3'>"  + piggies + "</tr>");
 
@@ -80,6 +80,45 @@ $(document).ready(function() {
     $(this).on("click", ".table-row", function() {
         // Remove table before displaying Details page
         $("#restaurant-table").remove();
+        console.log(this);
+        var detailsName = $(this).contents()[1].outerText;
+
+        var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
+
+        // Search for restaurant name
+            var restQuery = urlQuery + "name=" + detailsName;
+            $.ajax({
+                url: restQuery,
+                method: "GET"
+            })
+            .then(function(response) {
+                console.log(response);
+                if (response.total_entries > 0) {
+                    var rest = response.restaurants;
+                        var address = rest[0].address;
+                        var name = rest[0].name;
+                        var price = rest[0].price;
+                        var reserve = rest[0].reserve_url;
+                        var image_url = rest[0].image_url;
+                        var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
+
+                        var piggies = '';
+                        for (var j = 1; j <= price; j++) {
+                            piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
+                        }
+                
+                        $('#details-page').append("<br>" +
+                        "<br>" + image + "<br>" +
+                        "<br>" + name + "<br>" +
+                        "<br>" + address + "<br>" +
+                        "<br> Reservation Link: " + reserve + "<br>" +
+                        "<br>"  + piggies + "<br>");
+
+                } else {
+                    alert('0 search results');
+                }
+            });
+        
 
         // Add the details needed for the selected restaurant here
         
