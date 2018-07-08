@@ -29,3 +29,7 @@ body {
 caption {
     caption-side: top;
 }
+
+#details-page {
+    background-color: white;
+}
