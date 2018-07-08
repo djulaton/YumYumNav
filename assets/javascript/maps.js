@@ -23,7 +23,7 @@ $(document).ready(function() {
         city = $("#city").val().trim();
 
         // Call OpenTable API to generate the search results
-        var urlQuery = "http://opentable.herokuapp.com/api/restaurants?";
+        var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
 
         // Search for restaurant name
         if (restName !== '') {
