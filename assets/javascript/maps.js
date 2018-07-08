@@ -23,7 +23,7 @@ $(document).ready(function() {
         city = $("#city").val().trim();
 
         // Call OpenTable API to generate the search results
-        var urlQuery = "http://opentable.herokuapp.com/api/restaurants?";
+        var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
 
         // Search for restaurant name
         if (restName !== '') {
@@ -47,7 +47,7 @@ $(document).ready(function() {
                             piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
                         }
                 
-                        $('tbody').append("<tr class='table-row'>" +
+                        $('#search-results').append("<tr class='table-row'>" +
                         "<td class='col-xs-3'>" + image + "</td>" +
                         "<td class='col-xs-3'>" + name + "</td>" +
                         "<td class='col-xs-3'>" + address + "</td>" +
@@ -80,6 +80,8 @@ $(document).ready(function() {
     $(this).on("click", ".table-row", function() {
         // Remove table before displaying Details page
         $("#restaurant-table").remove();
+
+        // Add the details needed for the selected restaurant here
         
         //after the table is created, with the results from the search, use an onclick event to generate a google maps api map, using the value from the value
 
@@ -88,7 +90,16 @@ $(document).ready(function() {
         //jquery to create an iframe inside the #mapWindow div
         $("#mapWindow").append("<iframe>" + apiResult + "</iframe>");
 
-
+        // Start the "Others Searched" section
+        $("table.others-search").append("<caption>" + 'Others Also Searched...' + '</caption>');
+        $("#others-search-table-head").append("<tr><th>Restaurant Name</th><th>City</th><th>Zip</th><tr>"); 
+        
+        database.ref().limitToLast(10).on("child_added", function(childSnapshot) {
+            const firebaseData = childSnapshot.val();
+            $("#others-search-table-body").append("<tr><td>" + firebaseData.restName + "</td><td>" + firebaseData.city + "</td><td>" + firebaseData.zipCode + "</td></tr>");
+        }, function(errorObject){
+            console.log("Errors handled: " + errorObject.code)
+        });
     });
 });
 
