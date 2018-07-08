@@ -20,3 +20,8 @@ body {
 .row {
     margin-left: 324px;
 }
+
+.restaurant-image {
+    height: 100px;
+    width: 100px;
+}
