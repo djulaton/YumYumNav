@@ -85,7 +85,14 @@ $(document).ready(function() {
         // Set the API URL with the restaurant name to a variable
         var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + restName + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
         // create iframe emelment and set that to a variable with the API result URL
-        var addIframe = $('<iframe id="map" name="map">').attr('src', apiResult);
+        var addIframe = $('<iframe />', {
+            id: 'map', 
+            name: 'map',
+            src: apiResult,
+            height: "450",
+            width: "600" 
+        });
+        
         //jquery to create an iframe inside the #mapWindow div
         $("#mapWindow").append(addIframe);
 
