@@ -54,6 +54,8 @@ Build a web site that will allow users to enter a city or zip code or restaurant
 **Link to Design Doc/Mocks:**
 [Design Doc](https://docs.google.com/document/d/12pxr3jAcZ2QpY7Uc72rDMMf4BtPA5D7UMtfCCp1IS48)
 
+**Link to Product Presentation:** [YumYumNav App](https://docs.google.com/presentation/d/1_KqoKwgcoiCMJ4I26p2Yy8659SRI-9JbixPy80r0keM/edit#slide=id.gc6f80d1ff_0_0)
+
 **API References:**
 https://opentable.herokuapp.com/<br>
 https://developers.google.com/maps/documentation/javascript/examples/map-simple
