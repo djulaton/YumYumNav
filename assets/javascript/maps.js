@@ -82,13 +82,12 @@ $(document).ready(function() {
         $("#restaurant-table").remove();
 
         // Add the details needed for the selected restaurant here
-        
-        //after the table is created, with the results from the search, use an onclick event to generate a google maps api map, using the value from the value
-
+        // Set the API URL with the restaurant name to a variable
         var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + restName + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
-
+        // create iframe emelment and set that to a variable with the API result URL
+        var addIframe = $('<iframe id="map" name="map">').attr('src', apiResult);
         //jquery to create an iframe inside the #mapWindow div
-        $("#mapWindow").append("<iframe>" + apiResult + "</iframe>");
+        $("#mapWindow").append(addIframe);
 
         // Start the "Others Searched" section
         $("table.others-search").append("<caption>" + 'Others Also Searched...' + '</caption>');
