@@ -25,3 +25,7 @@ body {
     height: 100px;
     width: 100px;
 }
+
+caption {
+    caption-side: top;
+}
