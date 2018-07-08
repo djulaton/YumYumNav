@@ -44,7 +44,7 @@ $(document).ready(function() {
 
     $(this).on("click", ".table-row", function() {
         // Remove table before displaying Details page
-        $(".card").remove();
+        $("#restaurant-table").remove();
         
         //after the table is created, with the results from the search, use an onclick event to generate a google maps api map, using the value from the value
 
@@ -52,6 +52,8 @@ $(document).ready(function() {
 
         //jquery to create an iframe inside the #mapWindow div
         $("#mapWindow").append("<iframe>" + apiResult + "</iframe>");
+
+
     });
 });
 
