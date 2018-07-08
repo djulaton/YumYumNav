@@ -22,12 +22,47 @@ $(document).ready(function() {
         restName = $("#restaurant-name").val().trim();
         city = $("#city").val().trim();
 
-        $('tbody').append("<tr class='table-row'>" +
-            "<td class='col-xs-3'>" + 'image' + "</td>" +
-            "<td class='col-xs-3'>" + restName + "</td>" +
-            "<td class='col-xs-3'>" + 'stree address' + "</td>" +
-            "<td class='col-xs-3'>"  + "link" + "</td>" +
-            "<td class='col-xs-3'>"  + 'price' + "</tr>");
+        // Call OpenTable API to generate the search results
+        var urlQuery = "http://opentable.herokuapp.com/api/restaurants?";
+
+        // Search for restaurant name
+        if (restName !== '') {
+            var restQuery = urlQuery + "name=" + restName;
+            $.ajax({
+                url: restQuery,
+                method: "GET"
+            })
+            .then(function(response) {
+                if (response.total_entries > 0) {
+                    var rest = response.restaurants;
+                    for (var i = 0; i < rest.length; i++) {
+                        var address = rest[i].address;
+                        var name = rest[i].name;
+                        var price = rest[i].price;
+                        var image_url = rest[i].image_url;
+                        var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
+
+                        var piggies = '';
+                        for (var j = 1; j <= price; j++) {
+                            piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
+                        }
+                
+                        $('tbody').append("<tr class='table-row'>" +
+                        "<td class='col-xs-3'>" + image + "</td>" +
+                        "<td class='col-xs-3'>" + name + "</td>" +
+                        "<td class='col-xs-3'>" + address + "</td>" +
+                        "<td class='col-xs-3'>"  + piggies + "</tr>");
+
+                        if (i === 9) {
+                            break;
+                        }
+                    }
+
+                } else {
+                    alert('0 search results');
+                }
+            });
+        }
 
         // Code for pushing people's search to Firebase
         database.ref().push ({
