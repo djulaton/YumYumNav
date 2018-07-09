@@ -96,6 +96,10 @@ $(document).ready(function() {
                 if (response.total_entries > 0) {
                     var rest = response.restaurants;
                         var address = rest[0].address;
+                        var city = rest[0].city;
+                        var state = rest[0].state;
+                        var zip = rest[0].postal_code;
+                        var phoneNumber = rest[0].phone;
                         var name = rest[0].name;
                         var price = rest[0].price;
                         var reserve = rest[0].reserve_url;
@@ -109,10 +113,12 @@ $(document).ready(function() {
                 
                         $('#details-page').append("<br>" +
                         "<br>" + image + "<br>" +
-                        "<br>" + name + "<br>" +
-                        "<br>" + address + "<br>" +
-                        "<br> Reservation Link: " + reserve + "<br>" +
-                        "<br>"  + piggies + "<br>");
+                        "<p>" + name + "</p>" +
+                        "<p>" + address + "</p>" +
+                        "<p>" + city + ", " + state + ", " + zip + "</p>" +
+                        "<p><i class='fas fa-phone-square'></i> " + phoneNumber + "</p>" +
+                        "<p>Price Range: "  + piggies + "</p>" +
+                        "<p> Make reservations <a href='" + reserve + "'target='_blank'>here</a><br>");
 
                 } else {
                     alert('0 search results');
