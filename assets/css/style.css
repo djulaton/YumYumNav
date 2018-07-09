@@ -32,4 +32,7 @@ caption {
 
 #details-page {
     background-color: white;
+    text-align: center;
+    padding: 2px;
+    margin-bottom: 28px;
 }
