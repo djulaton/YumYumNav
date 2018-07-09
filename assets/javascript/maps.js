@@ -26,18 +26,18 @@ $(document).ready(function() {
         var url = '';
 
         // Input validations
-        if (isNaN(zipCode) || zipCode.length < 5) {
-            alert('Please enter a 5-digit number for the Zip.');
-            location.reload();
-            return false;
-        }
-
+        if (zipCode) {
+            if (isNaN(zipCode) || zipCode.length < 5) {
+                alert('Please enter a 5-digit number for the Zip.');
+                location.reload();
+                return false;
+            }
+        } 
         if ((zipCode === '') && (restName === '') && (city === '')) {
             alert('please enter something');
             location.reload();
             return false;
-        }
-
+        } 
         if ((zipCode !== '') && (city !== '')) {
             alert('Please enter either a Zip code or a City.  Not both.');
             location.reload();
