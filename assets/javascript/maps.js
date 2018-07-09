@@ -23,68 +23,42 @@ $(document).ready(function() {
         zipCode = $("#zip").val().trim();
         restName = $("#restaurant-name").val().trim();
         city = $("#city").val().trim();
+        var url = '';
 
+         // Input validations
         if ((zipCode === '') && (restName === '') && (city === '')) {
             alert('please enter something');
             location.reload();
             return false;
         }
 
-        // Input validations
         if ((zipCode !== '') && (city !== '')) {
             alert('Please enter either a Zip code or a City.  Not both.');
             location.reload();
+            return false;
         }
 
+        // Start searching OpenTable based on user's inputs
         if (zipCode) {
-            
-            
-            alert(" i have zip code");
+            if (restName) {
+                url = urlQuery + "name=" + restName + "&zip=" + zipCode;
+                searchOpenTable(url);
+            } else {
+                url = urlQuery + "zip=" + zipCode;
+                searchOpenTable(url);
+            }
         } else if (city) {
-            alert(" i have city");
+            if (restName) {
+                url = urlQuery + "name=" + restName + "&city=" + city;
+                searchOpenTable(url);
+            } else {
+                url = urlQuery + "city=" + city;
+                searchOpenTable(url);
+            }
         } else {
-            alert("i only have restaurant");
+            url = urlQuery + "name=" + restName;
+            searchOpenTable(url);
         }
-
-
-        // Search for restaurant name
-        // if (restName !== '') {
-        //     var restQuery = urlQuery + "name=" + restName;
-        //     $.ajax({
-        //         url: restQuery,
-        //         method: "GET"
-        //     })
-        //     .then(function(response) {
-        //         if (response.total_entries > 0) {
-        //             var rest = response.restaurants;
-        //             for (var i = 0; i < rest.length; i++) {
-        //                 var address = rest[i].address;
-        //                 var name = rest[i].name;
-        //                 var price = rest[i].price;
-        //                 var image_url = rest[i].image_url;
-        //                 var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
-
-        //                 var piggies = '';
-        //                 for (var j = 1; j <= price; j++) {
-        //                     piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
-        //                 }
-                
-        //                 $('#search-results').append("<tr class='table-row'>" +
-        //                 "<td class='col-xs-3'>" + image + "</td>" +
-        //                 "<td class='col-xs-3 openRest'>" + name + "</td>" +
-        //                 "<td class='col-xs-3'>" + address + "</td>" +
-        //                 "<td class='col-xs-3'>"  + piggies + "</tr>");
-
-        //                 if (i === 9) {
-        //                     break;
-        //                 }
-        //             }
-
-        //         } else {
-        //             alert('0 search results');
-        //         }
-        //     });
-        // }
 
         // Code for pushing people's search to Firebase
         database.ref().push ({
@@ -102,12 +76,14 @@ $(document).ready(function() {
     $(this).on("click", ".table-row", function() {
         // Remove table before displaying Details page
         $("#restaurant-table").remove();
-        console.log(this);
+
+        // Capture the restaurant name and save it in detailsName variable
         var detailsName = $(this).contents()[1].outerText;
 
-        // var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
+        // searchResturants(detailsName);
+        var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
 
-        // Search for restaurant name
+        //Search for restaurant name
             var restQuery = urlQuery + "name=" + detailsName;
             $.ajax({
                 url: restQuery,
@@ -117,31 +93,30 @@ $(document).ready(function() {
                 console.log(response);
                 if (response.total_entries > 0) {
                     var rest = response.restaurants;
-                        var address = rest[0].address;
-                        var city = rest[0].city;
-                        var state = rest[0].state;
-                        var zip = rest[0].postal_code;
-                        var phoneNumber = rest[0].phone;
-                        var name = rest[0].name;
-                        var price = rest[0].price;
-                        var reserve = rest[0].reserve_url;
-                        var image_url = rest[0].image_url;
-                        var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
+                    var address = rest[0].address;
+                    var city = rest[0].city;
+                    var state = rest[0].state;
+                    var zip = rest[0].postal_code;
+                    var phoneNumber = rest[0].phone;
+                    var name = rest[0].name;
+                    var price = rest[0].price;
+                    var reserve = rest[0].reserve_url;
+                    var image_url = rest[0].image_url;
+                    var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
 
-                        var piggies = '';
-                        for (var j = 1; j <= price; j++) {
-                            piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
-                        }
-                
-                        $('#details-page').append("<br>" +
-                        "<br>" + image + "<br>" +
-                        "<p>" + name + "</p>" +
-                        "<p>" + address + "</p>" +
-                        "<p>" + city + ", " + state + ", " + zip + "</p>" +
-                        "<p><i class='fas fa-phone-square'></i> " + phoneNumber + "</p>" +
-                        "<p>Price Range: "  + piggies + "</p>" +
-                        "<p> Make reservations <a href='" + reserve + "'target='_blank'>here</a><br>");
-
+                    var piggies = '';
+                    for (var j = 1; j <= price; j++) {
+                        piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
+                    }
+            
+                    $('#details-page').append("<br>" +
+                    "<br>" + image + "<br>" +
+                    "<p>" + name + "</p>" +
+                    "<p>" + address + "</p>" +
+                    "<p>" + city + ", " + state + ", " + zip + "</p>" +
+                    "<p><i class='fas fa-phone-square'></i> " + phoneNumber + "</p>" +
+                    "<p>Price Range: "  + piggies + "</p>" +
+                    "<p> Make reservations <a href='" + reserve + "'target='_blank'>here</a><br>");
                 } else {
                     alert('0 search results');
                 }
@@ -175,43 +150,43 @@ $(document).ready(function() {
         });
     });
 
-    function searchResturants(restName) {
-            var restQuery = urlQuery + "name=" + restName;
-            $.ajax({
-                url: restQuery,
-                method: "GET"
-            })
-            .then(function(response) {
-                if (response.total_entries > 0) {
-                    var rest = response.restaurants;
-                    for (var i = 0; i < rest.length; i++) {
-                        var address = rest[i].address;
-                        var name = rest[i].name;
-                        var price = rest[i].price;
-                        var image_url = rest[i].image_url;
-                        var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
+    function searchOpenTable(restQuery) {
+        $.ajax({
+            url: restQuery,
+            method: "GET"
+        })
+        .then(function(response) {
+            console.log(response);
 
-                        var piggies = '';
-                        for (var j = 1; j <= price; j++) {
-                            piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
-                        }
-                
-                        $('#search-results').append("<tr class='table-row'>" +
-                        "<td class='col-xs-3'>" + image + "</td>" +
-                        "<td class='col-xs-3 openRest'>" + name + "</td>" +
-                        "<td class='col-xs-3'>" + address + "</td>" +
-                        "<td class='col-xs-3'>"  + piggies + "</tr>");
+            if (response.total_entries > 0) {
+                var rest = response.restaurants;
+                for (var i = 0; i < rest.length; i++) {
+                    var address = rest[i].address;
+                    var name = rest[i].name;
+                    var price = rest[i].price;
+                    var image_url = rest[i].image_url;
+                    var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
 
-                        if (i === 9) {
-                            break;
-                        }
+                    var piggies = '';
+                    for (var j = 1; j <= price; j++) {
+                        piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
                     }
+            
+                    $('#search-results').append("<tr class='table-row'>" +
+                    "<td class='col-xs-3'>" + image + "</td>" +
+                    "<td class='col-xs-3 openRest'>" + name + "</td>" +
+                    "<td class='col-xs-3'>" + address + "</td>" +
+                    "<td class='col-xs-3'>"  + piggies + "</tr>");
 
-                } else {
-                    alert('0 search results');
+                    if (i === 9) {
+                        break;
+                    }
                 }
-            });
-    
+
+            } else {
+                alert('0 search results');
+            }
+        });
     };
 });
 
