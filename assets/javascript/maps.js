@@ -15,6 +15,8 @@ $(document).ready(function() {
     var zipCode = '';
     var restName = '';
     var city = '';
+    // OpenTable base API to generate the search results
+    var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
 
     $("#submit").on("click", function(event) {
         event.preventDefault();
@@ -22,47 +24,67 @@ $(document).ready(function() {
         restName = $("#restaurant-name").val().trim();
         city = $("#city").val().trim();
 
-        // Call OpenTable API to generate the search results
-        var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
+        if ((zipCode === '') && (restName === '') && (city === '')) {
+            alert('please enter something');
+            location.reload();
+            return false;
+        }
+
+        // Input validations
+        if ((zipCode !== '') && (city !== '')) {
+            alert('Please enter either a Zip code or a City.  Not both.');
+            location.reload();
+        }
+
+        if (zipCode) {
+            
+            
+            alert(" i have zip code");
+        } else if (city) {
+            alert(" i have city");
+        } else {
+            alert("i only have restaurant");
+        }
+
 
         // Search for restaurant name
-        if (restName !== '') {
-            var restQuery = urlQuery + "name=" + restName;
-            $.ajax({
-                url: restQuery,
-                method: "GET"
-            })
-            .then(function(response) {
-                if (response.total_entries > 0) {
-                    var rest = response.restaurants;
-                    for (var i = 0; i < rest.length; i++) {
-                        var address = rest[i].address;
-                        var name = rest[i].name;
-                        var price = rest[i].price;
-                        var image_url = rest[i].image_url;
-                        var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
+        // if (restName !== '') {
+        //     var restQuery = urlQuery + "name=" + restName;
+        //     $.ajax({
+        //         url: restQuery,
+        //         method: "GET"
+        //     })
+        //     .then(function(response) {
+        //         if (response.total_entries > 0) {
+        //             var rest = response.restaurants;
+        //             for (var i = 0; i < rest.length; i++) {
+        //                 var address = rest[i].address;
+        //                 var name = rest[i].name;
+        //                 var price = rest[i].price;
+        //                 var image_url = rest[i].image_url;
+        //                 var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
 
-                        var piggies = '';
-                        for (var j = 1; j <= price; j++) {
-                            piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
-                        }
+        //                 var piggies = '';
+        //                 for (var j = 1; j <= price; j++) {
+        //                     piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
+        //                 }
                 
-                        $('#search-results').append("<tr class='table-row'>" +
-                        "<td class='col-xs-3'>" + image + "</td>" +
-                        "<td class='col-xs-3 openRest'>" + name + "</td>" +
-                        "<td class='col-xs-3'>" + address + "</td>" +
-                        "<td class='col-xs-3'>"  + piggies + "</tr>");
+        //                 $('#search-results').append("<tr class='table-row'>" +
+        //                 "<td class='col-xs-3'>" + image + "</td>" +
+        //                 "<td class='col-xs-3 openRest'>" + name + "</td>" +
+        //                 "<td class='col-xs-3'>" + address + "</td>" +
+        //                 "<td class='col-xs-3'>"  + piggies + "</tr>");
 
-                        if (i === 9) {
-                            break;
-                        }
-                    }
+        //                 if (i === 9) {
+        //                     break;
+        //                 }
+        //             }
 
-                } else {
-                    alert('0 search results');
-                }
-            });
-        }
+        //         } else {
+        //             alert('0 search results');
+        //         }
+        //     });
+        // }
 
         // Code for pushing people's search to Firebase
         database.ref().push ({
@@ -83,7 +105,7 @@ $(document).ready(function() {
         console.log(this);
         var detailsName = $(this).contents()[1].outerText;
 
-        var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
+        // var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
 
         // Search for restaurant name
             var restQuery = urlQuery + "name=" + detailsName;
@@ -122,7 +144,7 @@ $(document).ready(function() {
 
         // Add the details needed for the selected restaurant here
         // Set the API URL with the restaurant name to a variable
-        var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + restName + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
+        var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
         // create iframe emelment and set that to a variable with the API result URL
         var addIframe = $('<iframe />', {
             id: 'map', 
@@ -146,5 +168,44 @@ $(document).ready(function() {
             console.log("Errors handled: " + errorObject.code)
         });
     });
+
+    function searchResturants(restName) {
+            var restQuery = urlQuery + "name=" + restName;
+            $.ajax({
+                url: restQuery,
+                method: "GET"
+            })
+            .then(function(response) {
+                if (response.total_entries > 0) {
+                    var rest = response.restaurants;
+                    for (var i = 0; i < rest.length; i++) {
+                        var address = rest[i].address;
+                        var name = rest[i].name;
+                        var price = rest[i].price;
+                        var image_url = rest[i].image_url;
+                        var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
+
+                        var piggies = '';
+                        for (var j = 1; j <= price; j++) {
+                            piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
+                        }
+                
+                        $('#search-results').append("<tr class='table-row'>" +
+                        "<td class='col-xs-3'>" + image + "</td>" +
+                        "<td class='col-xs-3 openRest'>" + name + "</td>" +
+                        "<td class='col-xs-3'>" + address + "</td>" +
+                        "<td class='col-xs-3'>"  + piggies + "</tr>");
+
+                        if (i === 9) {
+                            break;
+                        }
+                    }
+
+                } else {
+                    alert('0 search results');
+                }
+            });
+    
+    };
 });
 
