@@ -28,19 +28,22 @@ $(document).ready(function() {
         // Input validations
         if (zipCode) {
             if (isNaN(zipCode) || zipCode.length < 5) {
-                alert('Please enter a 5-digit number for the Zip.');
-                location.reload();
+                // alert('Please enter a 5-digit number for the Zip.');
+                // location.reload();
+                modalZip()
                 return false;
             }
         } 
         if ((zipCode === '') && (restName === '') && (city === '')) {
-            alert('please enter something');
-            location.reload();
+            // alert('please enter something');
+            // location.reload();
+            modalEmpty()
             return false;
         } 
         if ((zipCode !== '') && (city !== '')) {
-            alert('Please enter either a Zip code or a City.  Not both.');
-            location.reload();
+            // alert('Please enter either a Zip code or a City.  Not both.');
+            // location.reload();
+            modalBoth();
             return false;
         }
 
@@ -78,6 +81,24 @@ $(document).ready(function() {
         $("#restaurant-name").val('');
         $("#city").val('');
     });
+
+        // Create functions for each modal
+        function modalZip() {
+            $('#modal-zip').modal('show')
+        }
+    
+        function modalEmpty() {
+            $('#modal-empty').modal('show')
+        }
+    
+        function modalBoth() {
+            $('#modal-both').modal('show')
+        }
+    
+        //Created click event for location.reload() when modal is closed out
+        $('#close').on("click", function() {
+            location.reload();
+        })
 
     $(this).on("click", ".table-row", function() {
         // Remove table before displaying Details page
