@@ -92,7 +92,7 @@ $(document).ready(function() {
         location.reload();
     })
 
-    $(this).on("click", ".table-row", function() {
+    $(document).on("click", ".table-row", function() {
         // Remove table before displaying Details page
         $("#restaurant-table").remove();
 
@@ -101,11 +101,13 @@ $(document).ready(function() {
 
         //Search for restaurant name
             var restQuery = urlQuery + "name=" + detailsName;
+            console.log(restQuery);
             $.ajax({
                 url: restQuery,
                 method: "GET"
             })
             .then(function(response) {
+                console.log(response);
                 if (response.total_entries > 0) {
                     var rest = response.restaurants;
                     var address = rest[0].address;
@@ -132,24 +134,46 @@ $(document).ready(function() {
                     "<p><i class='fas fa-phone-square'></i> " + phoneNumber + "</p>" +
                     "<p>Price Range: "  + piggies + "</p>" +
                     "<p> Make reservations <a href='" + reserve + "'target='_blank'>here</a><br>");
+               
+                    console.log(city);
+                    console.log(zip);
+                    var space = "%20";
+                    var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + space + zip + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
+                    console.log(apiResult);
+                    // create iframe emelment and set that to a variable with the API result URL
+                    var addIframe = $('<iframe />', {
+                        id: 'map', 
+                        name: 'map',
+                        src: apiResult,
+                        height: "450",
+                        width: "600" 
+                    });
+                   
+                    $("#mapWindow").append(addIframe);
+               
                 } else {
                     modalZero();
                 }
             });
         
         // Set the API URL with the restaurant name to a variable
-        var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
-        // create iframe emelment and set that to a variable with the API result URL
-        var addIframe = $('<iframe />', {
-            id: 'map', 
-            name: 'map',
-            src: apiResult,
-            height: "450",
-            width: "600" 
-        });
+        // console.log(city);
+        // var space = "%20";
+        
+        
+        // var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + space + zip + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
+        // console.log(apiResult);
+        // // create iframe emelment and set that to a variable with the API result URL
+        // var addIframe = $('<iframe />', {
+        //     id: 'map', 
+        //     name: 'map',
+        //     src: apiResult,
+        //     height: "450",
+        //     width: "600" 
+        // });
         
         //jquery to create an iframe inside the #mapWindow div
-        $("#mapWindow").append(addIframe);
+        
 
         // Start the "Others Searched" section
         $("table.others-search").append("<caption>" + 'Others Also Searched...' + '</caption>');
