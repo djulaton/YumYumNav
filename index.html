@@ -112,21 +112,21 @@
         </div>
 
         <div class="container" id="search-menu">
-            <form id="form">
+            <form autocomplete="off" id="form">
                 <div class="form-group row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" id="autocompleteCity">
                         <label for="city">City: </label>
                         <input id="city" type="text" class="form-control" value="" name="city" placeholder="i.e. San Francisco">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" id="autocompleteZip">
                         <label for="zip">Zip: </label>
                         <input id="zip" type="text" class="form-control" value="" name="zip" placeholder="i.e. 94111" maxlength="5">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" id="autocompleteRest">
                         <label for="restaurant-name">Restaurant: </label>
                         <input id="restaurant-name" type="text" class="form-control"value="" name="restaurant-name" placeholder="i.e. McDonald's">
                     </div>
@@ -147,7 +147,7 @@
         </div>
 
         <div class="container">
-            <div class="card" id='restaurant-table'>
+            <div class="card border-primary mb-3" id='restaurant-table'>
                 <div class="card-header">Restaurant Details</div>
                 <div class="card-body">
                     <table class="table table-hover">
