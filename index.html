@@ -1,167 +1,200 @@
 <!DOCTYPE HTML>
 <html lang="en">
-<head>
-  <title>YumYumNav</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <title>YumYumNav</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-    <!-- Font awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
-    <!-- Team's CSS file -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
-  
-</head>
-<body>
+        <!-- Team's CSS file -->
+        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    
+    </head>
 
-<div class="modal" id="modal-zip" tabindex="-1" role="dialog">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title">Oops!</h5>
-                <span aria-hidden="true">&times;</span>
-            </button>
-    </div>
-    <div class="modal-body">
-        <p>Please enter a 5-digit number for the Zip</p>
-    </div>
-    <div class="modal-footer">
-        <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-    </div>
-</div>
-</div>
-
-<div class="modal" id="modal-empty" tabindex="-1" role="dialog">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title">Oops!</h5>
-            <span aria-hidden="true">&times;</span>
-    </div>
-    <div class="modal-body">
-        <p>Please enter something</p>
-    </div>
-    <div class="modal-footer">
-        <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-    </div>
-</div>
-</div>
-
-<div class="modal" id="modal-both" tabindex="-1" role="dialog">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title">Oops!</h5>
-            <span aria-hidden="true">&times;</span>
-    </div>
-    <div class="modal-body">
-        <p>Please enter either a Zip code or a City.  Not both.</p>
-    </div>
-    <div class="modal-footer">
-        <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-    </div>
-</div>
-</div>
-
-<div id="bg">
-    <img src="./assets/images/restaurant-background.jpg" alt="">
-</div> 
-
-<div class="container">    
-    <img src="assets/images/yumyumnav.JPG" class="img-circle" alt="Brand Logo" width="304" height="236"> 
-</div>
-
-<div class="container" id="search-menu">
-    <form id="form">
-        <div class="form-group row">
-            <div class="form-group col-md-6">
-                <label for="city">City: </label>
-                <input id="city" type="text" class="form-control" value="" name="city" placeholder="i.e. San Francisco">
+    <body>
+        <div class="modal" id="modal-zip" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Oops!</h5>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please enter a 5-digit number for the Zip</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="form-group col-md-6">
-                <label for="zip">Zip: </label>
-                <input id="zip" type="text" class="form-control" value="" name="zip" placeholder="i.e. 94111" maxlength="5">
+
+        <div class="modal" id="modal-empty" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Error</h5>
+                        <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Please enter something</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="form-group col-md-6">
-                <label for="restaurant-name">Restaurant: </label>
-                <input id="restaurant-name" type="text" class="form-control"value="" name="restaurant-name" placeholder="i.e. McDonald's">
+
+        <div class="modal" id="modal-both" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Oops!</h5>
+                        <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Please enter either a Zip code or a City.  Not both.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="form-group col-md-6">
-                <button id="submit" type="button" class="btn btn-primary">Submit</button>
+
+        <div class="modal" id="modal-both" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Oops!</h5>
+                        <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Please enter either a Zip code or a City.  Not both.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
             </div>
         </div>
-    </form>
-</div>
 
-<div class="container">
-    <div class="form-group col-md-6" id="mapWindow"></div>
-</div>
+        <div class="modal" id="modal-zero" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Oops!</h5>
+                        <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>0 Search Results</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
 
-<div class="container" id="details-page">
-</div>
+        <div id="bg">
+            <img src="./assets/images/restaurant-background.jpg" alt="">
+        </div> 
 
-<div class="container">
-    <div class="card border-primary mb-3" id='restaurant-table'>
-        <div class="card-header">Restaurant Details</div>
-          <div class="card-body">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th class="col-xs-3">Image</th>
-                  <th class="col-xs-3">Restaurant Name</th>
-                  <th class="col-xs-3">Address</th>
-                  <th class="col-xs-3">Price <i class="fas fa-piggy-bank"></i></th>
-                </tr>
-              </thead>
-              <tbody id="search-results">
-              </tbody>
-            </table>
-         </div>
-    </div>
-</div>
+        <div class="container">    
+            <img src="assets/images/yumyumnav.JPG" class="img-circle" alt="Brand Logo" width="304" height="236"> 
+        </div>
 
-<div class="container" id="recent-search">
+        <div class="container" id="search-menu">
+            <form id="form">
+                <div class="form-group row">
+                    <div class="form-group col-md-6">
+                        <label for="city">City: </label>
+                        <input id="city" type="text" class="form-control" value="" name="city" placeholder="i.e. San Francisco">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group col-md-6">
+                        <label for="zip">Zip: </label>
+                        <input id="zip" type="text" class="form-control" value="" name="zip" placeholder="i.e. 94111" maxlength="5">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group col-md-6">
+                        <label for="restaurant-name">Restaurant: </label>
+                        <input id="restaurant-name" type="text" class="form-control"value="" name="restaurant-name" placeholder="i.e. McDonald's">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group col-md-6">
+                        <button id="submit" type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-</div>
+        <div class="container">
+            <div class="form-group col-md-6" id="mapWindow"></div>
+        </div>
 
-<div class="container">
-    <div class="card border-primary mb-3">
-        <table class="others-search">
-            <thead id="others-search-table-head">
-            </thead>
-            <tbody id="others-search-table-body">
-            </tbody>
-        </table>
-    </div>
-</div>
+        <div class="container" id="details-page">
+        </div>
+
+        <div class="container">
+            <div class="card border-primary mb-3" id='restaurant-table'>
+                <div class="card-header">Restaurant Details</div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                    <thead>
+                        <tr>
+                        <th class="col-xs-3">Image</th>
+                        <th class="col-xs-3">Restaurant Name</th>
+                        <th class="col-xs-3">Address</th>
+                        <th class="col-xs-3">Price <i class="fas fa-piggy-bank"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="search-results">
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="recent-search">
+        </div>
+
+        <div class="container">
+            <div class="card border-primary mb-3">
+                <table class="others-search">
+                    <thead id="others-search-table-head">
+                    </thead>
+                    <tbody id="others-search-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-<!-- Links for Bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- Links for Bootstrap -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-   
-<!-- Firebase Reference -->
-<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        
+        <!-- Firebase Reference -->
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
 
-<!-- Team's JS file -->
-<script src="assets/javascript/maps.js"></script>
+        <!-- Team's JS file -->
+        <script src="assets/javascript/maps.js"></script>
 
-</body>
+    </body>
 </html>

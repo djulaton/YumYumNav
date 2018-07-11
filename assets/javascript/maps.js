@@ -20,6 +20,12 @@ $(document).ready(function() {
 
     $("#submit").on("click", function(event) {
         event.preventDefault();
+
+        //disable all input fields
+        for (var d = 0; d < 3; d++) {
+            $("input")[d].disabled = true;
+        }
+
         zipCode = $("#zip").val().trim();
         restName = $("#restaurant-name").val().trim();
         city = $("#city").val().trim();
@@ -28,24 +34,20 @@ $(document).ready(function() {
         // Input validations
         if (zipCode) {
             if (isNaN(zipCode) || zipCode.length < 5) {
-                // alert('Please enter a 5-digit number for the Zip.');
-                // location.reload();
-                modalZip()
+                modalZip();
                 return false;
             }
         } 
         if ((zipCode === '') && (restName === '') && (city === '')) {
-            // alert('please enter something');
-            // location.reload();
-            modalEmpty()
+            modalEmpty();
             return false;
         } 
         if ((zipCode !== '') && (city !== '')) {
-            // alert('Please enter either a Zip code or a City.  Not both.');
-            // location.reload();
             modalBoth();
             return false;
         }
+
+        var regex = /\W|_/g;
 
         // Start searching OpenTable based on user's inputs
         if (zipCode) {
@@ -82,23 +84,13 @@ $(document).ready(function() {
         $("#city").val('');
     });
 
-        // Create functions for each modal
-        function modalZip() {
-            $('#modal-zip').modal('show')
-        }
-    
-        function modalEmpty() {
-            $('#modal-empty').modal('show')
-        }
-    
-        function modalBoth() {
-            $('#modal-both').modal('show')
-        }
-    
-        //Created click event for location.reload() when modal is closed out
-        $('#close').on("click", function() {
-            location.reload();
-        })
+    //Created click event for location.reload() when modal is closed out
+    // $('#close').on("click", function() {
+    //     location.reload();
+    // })
+    $(document).on("click", "#close", function() {
+        location.reload();
+    })
 
     $(this).on("click", ".table-row", function() {
         // Remove table before displaying Details page
@@ -107,9 +99,6 @@ $(document).ready(function() {
         // Capture the restaurant name and save it in detailsName variable
         var detailsName = $(this).contents()[1].outerText;
 
-        // searchResturants(detailsName);
-        var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
-
         //Search for restaurant name
             var restQuery = urlQuery + "name=" + detailsName;
             $.ajax({
@@ -117,7 +106,6 @@ $(document).ready(function() {
                 method: "GET"
             })
             .then(function(response) {
-                console.log(response);
                 if (response.total_entries > 0) {
                     var rest = response.restaurants;
                     var address = rest[0].address;
@@ -145,12 +133,10 @@ $(document).ready(function() {
                     "<p>Price Range: "  + piggies + "</p>" +
                     "<p> Make reservations <a href='" + reserve + "'target='_blank'>here</a><br>");
                 } else {
-                    alert('0 search results');
+                    modalZero();
                 }
             });
         
-
-        // Add the details needed for the selected restaurant here
         // Set the API URL with the restaurant name to a variable
         var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
         // create iframe emelment and set that to a variable with the API result URL
@@ -176,6 +162,23 @@ $(document).ready(function() {
             console.log("Errors handled: " + errorObject.code)
         });
     });
+
+    // Create functions for each modal
+    function modalZip() {
+        $('#modal-zip').modal('show');
+    }
+
+    function modalEmpty() {
+        $('#modal-empty').modal('show');
+    }
+
+    function modalBoth() {
+        $('#modal-both').modal('show');
+    }
+
+    function modalZero() {
+        $('#modal-zero').modal('show');
+    }
 
     function searchOpenTable(restQuery) {
         $.ajax({
@@ -209,9 +212,8 @@ $(document).ready(function() {
                         break;
                     }
                 }
-
             } else {
-                alert('0 search results');
+                modalZero();
             }
         });
     };
