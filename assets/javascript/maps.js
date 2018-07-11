@@ -135,43 +135,34 @@ $(document).ready(function() {
                     "<p>Price Range: "  + piggies + "</p>" +
                     "<p> Make reservations <a href='" + reserve + "'target='_blank'>here</a><br>");
                
-                    console.log(city);
-                    console.log(zip);
-                    var space = "%20";
-                    var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + space + zip + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
-                    console.log(apiResult);
-                    // create iframe emelment and set that to a variable with the API result URL
-                    var addIframe = $('<iframe />', {
-                        id: 'map', 
-                        name: 'map',
-                        src: apiResult,
-                        height: "450",
-                        width: "600" 
-                    });
-                   
-                    $("#mapWindow").append(addIframe);
-               
+                    renderMap();
+
                 } else {
                     modalZero();
                 }
             });
         
         // Set the API URL with the restaurant name to a variable
-        // console.log(city);
-        // var space = "%20";
+        function renderMap () {
+            console.log(city);
+            console.log(zip);
+            var space = "%20";
+            var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + space + zip + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
+            console.log(apiResult);
+            // create iframe emelment and set that to a variable with the API result URL
+            var addIframe = $('<iframe />', {
+                id: 'map', 
+                name: 'map',
+                src: apiResult,
+                height: "450",
+                width: "600" 
+            });
         
-        
-        // var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + space + zip + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
-        // console.log(apiResult);
-        // // create iframe emelment and set that to a variable with the API result URL
-        // var addIframe = $('<iframe />', {
-        //     id: 'map', 
-        //     name: 'map',
-        //     src: apiResult,
-        //     height: "450",
-        //     width: "600" 
-        // });
-        
+            $("#mapWindow").append(addIframe);
+    };
+
+
+
         //jquery to create an iframe inside the #mapWindow div
         
 
