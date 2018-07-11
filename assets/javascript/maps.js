@@ -47,8 +47,6 @@ $(document).ready(function() {
             return false;
         }
 
-        var regex = /\W|_/g;
-
         // Start searching OpenTable based on user's inputs
         if (zipCode) {
             if (restName) {
@@ -85,9 +83,6 @@ $(document).ready(function() {
     });
 
     //Created click event for location.reload() when modal is closed out
-    // $('#close').on("click", function() {
-    //     location.reload();
-    // })
     $(document).on("click", "#close", function() {
         location.reload();
     })
@@ -96,75 +91,44 @@ $(document).ready(function() {
         // Remove table before displaying Details page
         $("#restaurant-table").remove();
 
-        // Capture the restaurant name and save it in detailsName variable
-        var detailsName = $(this).contents()[1].outerText;
+        // Capture the restaurant info from HTML table
+        var detailsState = '';
+        var detailsCity = '';
+        var detailsZip = '';
+        var detailsName = '';
+        var detailsAddress = '';
+        var detailsImageUrl = '';
+        var detailsPrice = 0;
+        var detailsPhone = '';
+        var detailsReserve = '';
 
-        //Search for restaurant name
-            var restQuery = urlQuery + "name=" + detailsName;
-            console.log(restQuery);
-            $.ajax({
-                url: restQuery,
-                method: "GET"
-            })
-            .then(function(response) {
-                console.log(response);
-                if (response.total_entries > 0) {
-                    var rest = response.restaurants;
-                    var address = rest[0].address;
-                    var city = rest[0].city;
-                    var state = rest[0].state;
-                    var zip = rest[0].postal_code;
-                    var phoneNumber = rest[0].phone;
-                    var name = rest[0].name;
-                    var price = rest[0].price;
-                    var reserve = rest[0].reserve_url;
-                    var image_url = rest[0].image_url;
-                    var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
-
-                    var piggies = '';
-                    for (var j = 1; j <= price; j++) {
-                        piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
-                    }
-            
-                    $('#details-page').append("<br>" +
-                    "<br>" + image + "<br>" +
-                    "<p>" + name + "</p>" +
-                    "<p>" + address + "</p>" +
-                    "<p>" + city + ", " + state + ", " + zip + "</p>" +
-                    "<p><i class='fas fa-phone-square'></i> " + phoneNumber + "</p>" +
-                    "<p>Price Range: "  + piggies + "</p>" +
-                    "<p> Make reservations <a href='" + reserve + "'target='_blank'>here</a><br>");
-               
-                    renderMap();
-
-                } else {
-                    modalZero();
-                }
-            });
+        detailsName = $(this).find('.restaurant-res-name').attr("data-restaurant-name");
+        detailsAddress = $(this).find('.restaurant-address').attr("data-restaurant-address");
+        detailsImageUrl = $(this).find('.restaurant-image').attr("data-restaurant-imageurl");
+        detailsPrice = $(this).find('.restaurant-price').attr("data-restaurant-price");
+        detailsCity = $(this).find('.restaurant-price').attr("data-restaurant-city");
+        detailsZip = $(this).find('.restaurant-price').attr("data-restaurant-zip");
+        detailsPhone = $(this).find('.restaurant-price').attr("data-restaurant-phone");
+        detailsReserve = $(this).find('.restaurant-price').attr("data-restaurant-reserve-url");
+        detailsState = $(this).find('.restaurant-price').attr("data-restaurant-state");
         
-        // Set the API URL with the restaurant name to a variable
-        function renderMap () {
-            console.log(city);
-            console.log(zip);
-            var space = "%20";
-            var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + space + zip + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
-            console.log(apiResult);
-            // create iframe emelment and set that to a variable with the API result URL
-            var addIframe = $('<iframe />', {
-                id: 'map', 
-                name: 'map',
-                src: apiResult,
-                height: "450",
-                width: "600" 
-            });
-        
-            $("#mapWindow").append(addIframe);
-    };
+        var image = "<img src=" + detailsImageUrl + " alt='image' class='restaurant-image'>";
 
+        var piggies = '';
+        for (var j = 1; j <= detailsPrice; j++) {
+            piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
+        }
 
-
-        //jquery to create an iframe inside the #mapWindow div
-        
+        $('#details-page').append("<br>" +
+        "<br>" + image + "<br>" +
+        "<p>" + detailsName + "</p>" +
+        "<p>" + detailsAddress + "</p>" +
+        "<p>" + detailsCity + ", " + detailsState + ", " + detailsZip + "</p>" +
+        "<p><i class='fas fa-phone-square'></i> " + detailsPhone + "</p>" +
+        "<p>Price Range: "  + piggies + "</p>" +
+        "<p> Make reservations <a href='" + detailsReserve + "'target='_blank'>here</a><br>");
+    
+        renderMap(detailsName, detailsCity, detailsZip);
 
         // Start the "Others Searched" section
         $("table.others-search").append("<caption>" + 'Others Also Searched...' + '</caption>');
@@ -181,19 +145,34 @@ $(document).ready(function() {
     // Create functions for each modal
     function modalZip() {
         $('#modal-zip').modal('show');
-    }
+    };
 
     function modalEmpty() {
         $('#modal-empty').modal('show');
-    }
+    };
 
     function modalBoth() {
         $('#modal-both').modal('show');
-    }
+    };
 
     function modalZero() {
         $('#modal-zero').modal('show');
-    }
+    };
+
+    function renderMap(detailsName, detailsCity, detailsZip) {
+        var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + detailsZip + detailsCity + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
+
+        // create iframe emelment and set that to a variable with the API result URL
+        var addIframe = $('<iframe />', {
+            id: 'map', 
+            name: 'map',
+            src: apiResult,
+            height: "450",
+            width: "600" 
+        });
+    
+        $("#mapWindow").append(addIframe);
+    };
 
     function searchOpenTable(restQuery) {
         $.ajax({
@@ -201,35 +180,91 @@ $(document).ready(function() {
             method: "GET"
         })
         .then(function(response) {
-            console.log(response);
+            var address = [];
+            var name = [];
+            var image_url = [];
+            var price = [];
+            var resCity = [];
+            var reserve_url = [];
+            var resZip = [];
+            var resState = [];
+            var resPhone = [];
 
             if (response.total_entries > 0) {
                 var rest = response.restaurants;
                 for (var i = 0; i < rest.length; i++) {
-                    var address = rest[i].address;
-                    var name = rest[i].name;
-                    var price = rest[i].price;
-                    var image_url = rest[i].image_url;
-                    var image = "<img src=" + image_url + " alt='image' class='restaurant-image'>";
+                    resPhone.push(rest[i].phone);
+                    resState.push(rest[i].state);
+                    resCity.push(rest[i].city);
+                    reserve_url.push(rest[i].reserve_url);
+                    address.push(rest[i].address);
+                    resZip.push(rest[i].postal_code);
+                    name.push(rest[i].name);
+                    price.push(rest[i].price);
+                    image_url.push(rest[i].image_url);
+                    var image = "<img src=" + rest[i].image_url + " alt='image' class='rest-image'>";
 
                     var piggies = '';
-                    for (var j = 1; j <= price; j++) {
+                    for (var j = 1; j <= rest[i].price; j++) {
                         piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
                     }
             
                     $('#search-results').append("<tr class='table-row'>" +
-                    "<td class='col-xs-3'>" + image + "</td>" +
-                    "<td class='col-xs-3 openRest'>" + name + "</td>" +
-                    "<td class='col-xs-3'>" + address + "</td>" +
-                    "<td class='col-xs-3'>"  + piggies + "</tr>");
+                    "<td class='col-xs-3 restaurant-image'>" + image + "</td>" +
+                    "<td class='col-xs-3 restaurant-res-name'>" + rest[i].name + "</td>" +
+                    "<td class='col-xs-3 restaurant-address'>" + rest[i].address + "</td>" +
+                    "<td class='col-xs-3 restaurant-price'>"  + piggies + "</td></tr>");
 
-                    if (i === 9) {
+                    if (i === 9) { 
                         break;
                     }
                 }
             } else {
                 modalZero();
             }
+            
+            addDataAttributes(address, name, price, image_url, resCity, resZip, reserve_url, resState, resPhone); 
+        });
+        
+    };
+
+    function addDataAttributes(address, name, price, image_url, resCity, resZip, reserve_url, resState, resPhone) {
+        // This function is to loop through the newly created table rows and add data-attribute to each of them.
+
+        $.each($(".restaurant-res-name"), function(index, item) {
+            $(item).attr('data-restaurant-name', name[index]);
+        });
+
+        $.each($(".restaurant-address"), function(index, item) {
+            $(item).attr('data-restaurant-address', address[index]);
+        });
+
+        $.each($(".restaurant-price"), function(index, item) {
+            $(item).attr('data-restaurant-price', price[index]);
+        });
+
+        $.each($(".restaurant-image"), function(index, item) {
+            $(item).attr('data-restaurant-imageurl', image_url[index]);
+        });
+
+        $.each($(".restaurant-price"), function(index, item) {
+            $(item).attr('data-restaurant-city', resCity[index]);
+        });
+
+        $.each($(".restaurant-price"), function(index, item) {
+            $(item).attr('data-restaurant-reserve-url', reserve_url[index]);
+        });
+
+        $.each($(".restaurant-price"), function(index, item) {
+            $(item).attr('data-restaurant-zip', resZip[index]);
+        });
+
+        $.each($(".restaurant-price"), function(index, item) {
+            $(item).attr('data-restaurant-state', resState[index]);
+        });
+
+        $.each($(".restaurant-price"), function(index, item) {
+            $(item).attr('data-restaurant-phone', resPhone[index]);
         });
     };
 });
