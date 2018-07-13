@@ -27,8 +27,8 @@ $(document).ready(function() {
         }
 
         zipCode = $("#zip").val().trim();
-        restName = $("#restaurant-name").val().trim();
-        city = $("#city").val().trim();
+        restName = ($("#restaurant-name").val().trim()).toUpperCase();
+        city = ($("#city").val().trim()).toUpperCase();
         var url = '';
 
         // Input validations
@@ -72,8 +72,8 @@ $(document).ready(function() {
         // Code for pushing people's search to Firebase
         database.ref().push ({
             zipCode: zipCode,
-            restName: restName,
-            city: city
+            restName: restName ,
+            city: city 
         });
 
         // Clear out the input fields
@@ -141,7 +141,25 @@ $(document).ready(function() {
             console.log("Errors handled: " + errorObject.code)
         });
     });
-
+    var cityAutoComp = [];
+    var restNameAutoComp = [];
+    var zipCodeAutoComp = [];
+    //Listener that handles autocomplete
+    database.ref().on("child_added", function(snap) {
+        if(snap.val().city !== '' && (cityAutoComp ).indexOf(snap.val().city) === -1) {
+            cityAutoComp.push(snap.val().city);
+        } else if (snap.val().restName !== '' && (restNameAutoComp ).indexOf(snap.val().restName) === -1) {
+            restNameAutoComp.push(snap.val().restName); 
+        }
+        else if(snap.val().zipCode !== '' && zipCodeAutoComp.indexOf(snap.val().zipCode) === -1) {
+            zipCodeAutoComp.push(snap.val().zipCode);
+        }
+    });
+    
+    $( "#city" ).autocomplete({
+        source: cityAutoComp
+    });
+    
     // Create functions for each modal
     function modalZip() {
         $('#modal-zip').modal('show');
@@ -160,7 +178,7 @@ $(document).ready(function() {
     };
 
     function renderMap(detailsName, detailsCity, detailsZip) {
-        var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + detailsZip + detailsCity + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
+        var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + detailsCity + detailsZip + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
 
         // create iframe emelment and set that to a variable with the API result URL
         var addIframe = $('<iframe />', {
