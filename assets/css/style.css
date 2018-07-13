@@ -46,6 +46,12 @@
     border-radius: 50%;
 }
 
+#detail-image {
+    height: 300px;
+    width: 300px;
+    border: 3px solid black;
+}
+
 caption {
     caption-side: top;
 }
