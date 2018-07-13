@@ -15,11 +15,19 @@ $(document).ready(function() {
     var zipCode = '';
     var restName = '';
     var city = '';
+
+    // Hide restaurant table and others table when page is loaded
+    $("#restaurant-table").hide();
+    $("#others").hide();
+
     // OpenTable base API to generate the search results
     var urlQuery = "https://opentable.herokuapp.com/api/restaurants?";
 
     $("#submit").on("click", function(event) {
         event.preventDefault();
+
+        // show restaurant table
+        $("#restaurant-table").show();
 
         //disable all input fields
         for (var d = 0; d < 3; d++) {
@@ -91,6 +99,9 @@ $(document).ready(function() {
         // Remove table before displaying Details page
         $("#restaurant-table").remove();
 
+        // show others searched table
+        $("#others").show()
+
         // Capture the restaurant info from HTML table
         var detailsState = '';
         var detailsCity = '';
@@ -121,7 +132,7 @@ $(document).ready(function() {
 
         $('#details-page').append("<br>" +
         "<br>" + image + "<br>" +
-        "<p>" + detailsName + "</p>" +
+        "<h3>" + detailsName + "</h3>" +
         "<p>" + detailsAddress + "</p>" +
         "<p>" + detailsCity + ", " + detailsState + ", " + detailsZip + "</p>" +
         "<p><i class='fas fa-phone-square'></i> " + detailsPhone + "</p>" +
