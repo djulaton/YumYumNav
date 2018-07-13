@@ -112,7 +112,7 @@ $(document).ready(function() {
         detailsReserve = $(this).find('.restaurant-price').attr("data-restaurant-reserve-url");
         detailsState = $(this).find('.restaurant-price').attr("data-restaurant-state");
         
-        var image = "<img src=" + detailsImageUrl + " alt='image' class='restaurant-image'>";
+        var image = "<img src=" + detailsImageUrl + " alt='image' class='restaurant-image' id='detail-image'>";
 
         var piggies = '';
         for (var j = 1; j <= detailsPrice; j++) {
