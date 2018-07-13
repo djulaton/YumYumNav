@@ -168,7 +168,6 @@ $(document).ready(function() {
     });
     
     $( "#city" ).autocomplete({
-        appendTo: '#search-menu',
         source: cityAutoComp
     });
     
