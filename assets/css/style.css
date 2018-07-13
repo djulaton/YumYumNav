@@ -3,7 +3,6 @@
     float: left;
     margin-right: 20px;
     margin-top: 20px;
-    /* position: absolute; */
     width: 250px;
     height: 200px;
 }
@@ -31,14 +30,6 @@
     font-weight: bold;
     color: white;
 }
-
-/* .form-control {
-    width: 150%;
-} */
-
-/* .row {
-    margin-left: 324px;
-} */
 
 .restaurant-image {
     height: 100px;
