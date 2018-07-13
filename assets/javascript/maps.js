@@ -178,6 +178,8 @@ $(document).ready(function() {
     };
 
     function renderMap(detailsName, detailsCity, detailsZip) {
+        detailsName = encodeURIComponent(detailsName);
+
         var apiResult = "https://www.google.com/maps/embed/v1/search?q=" + detailsName + detailsCity + detailsZip + "&key=AIzaSyDzd8udb7o2Ms2UBhL0PVbszc0Seo38DFY";
 
         // create iframe emelment and set that to a variable with the API result URL
