@@ -167,8 +167,16 @@ $(document).ready(function() {
         }
     });
     
-    $( "#city" ).autocomplete({
+    $("#city").autocomplete({
         source: cityAutoComp
+    });
+
+    $("#zip").autocomplete({
+        source: zipCodeAutoComp
+    });
+
+    $("#restaurant-name").autocomplete({
+        source: restNameAutoComp
     });
     
     // Create functions for each modal
