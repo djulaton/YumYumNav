@@ -197,9 +197,7 @@ $(document).ready(function() {
         var addIframe = $('<iframe />', {
             id: 'map', 
             name: 'map',
-            src: apiResult,
-            height: "450",
-            width: "600" 
+            src: apiResult
         });
     
         $("#mapWindow").append(addIframe);

@@ -60,3 +60,7 @@ caption {
 #form {
     width: 66%;
 }
+#map {
+    width: 300px;
+    height: 300px;
+}
