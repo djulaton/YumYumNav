@@ -64,3 +64,34 @@ caption {
     width: 300px;
     height: 300px;
 }
+
+#others {
+    margin-bottom: 100px;
+}
+
+.rest-image {
+    height: 100px;
+    width: 100px;
+}
+
+.ui-autocomplete {
+    position: relative;
+    float: right;
+    cursor: default;
+}
+
+#ui-id-1 {
+    margin-top: -295px;
+}
+
+#ui-id-2 {
+    margin-top: -210px;
+}
+
+#ui-id-3 {
+    margin-top: -125px;
+}
+
+.ui-menu {
+    margin: 185px;
+}
