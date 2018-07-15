@@ -77,13 +77,6 @@ $(document).ready(function() {
             searchOpenTable(url);
         }
 
-        // Code for pushing people's search to Firebase
-        database.ref().push ({
-            zipCode: zipCode,
-            restName: restName ,
-            city: city 
-        });
-
         // Clear out the input fields
         $("#zip").val('');
         $("#restaurant-name").val('');
@@ -122,6 +115,13 @@ $(document).ready(function() {
         detailsPhone = $(this).find('.restaurant-price').attr("data-restaurant-phone");
         detailsReserve = $(this).find('.restaurant-price').attr("data-restaurant-reserve-url");
         detailsState = $(this).find('.restaurant-price').attr("data-restaurant-state");
+
+        // Code for pushing people's search to Firebase
+        database.ref().push ({
+            zipCode: detailsZip,
+            restName: detailsName.toUpperCase() ,
+            city: detailsCity.toUpperCase() 
+        });
         
         var image = "<img src=" + detailsImageUrl + " alt='image' class='restaurant-image' id='detail-image'>";
 
