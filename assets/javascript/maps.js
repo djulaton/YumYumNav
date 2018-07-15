@@ -157,12 +157,13 @@ $(document).ready(function() {
     var zipCodeAutoComp = [];
     //Listener that handles autocomplete
     database.ref().on("child_added", function(snap) {
-        if(snap.val().city !== '' && (cityAutoComp ).indexOf(snap.val().city) === -1) {
+        if(snap.val().city !== '' && (cityAutoComp).indexOf(snap.val().city) === -1) {
             cityAutoComp.push(snap.val().city);
-        } else if (snap.val().restName !== '' && (restNameAutoComp ).indexOf(snap.val().restName) === -1) {
+        } 
+        if (snap.val().restName !== '' && (restNameAutoComp).indexOf(snap.val().restName) === -1) {
             restNameAutoComp.push(snap.val().restName); 
-        }
-        else if(snap.val().zipCode !== '' && zipCodeAutoComp.indexOf(snap.val().zipCode) === -1) {
+        } 
+        if(snap.val().zipCode !== '' && (zipCodeAutoComp).indexOf(snap.val().zipCode) === -1) {
             zipCodeAutoComp.push(snap.val().zipCode);
         }
     });
