@@ -48,6 +48,7 @@ $(document).ready(function() {
         } 
         if ((zipCode === '') && (restName === '') && (city === '')) {
             modalEmpty();
+            $("#restaurant-table").hide();
             return false;
         } 
         if ((zipCode !== '') && (city !== '')) {
@@ -90,7 +91,7 @@ $(document).ready(function() {
 
     $(document).on("click", ".table-row", function() {
         // Remove table before displaying Details page
-        $("#restaurant-table").remove();
+        $("#restaurant-table").hide();
 
         // show others searched table
         $("#others").show()
@@ -130,6 +131,12 @@ $(document).ready(function() {
             piggies = piggies + '<i class="fas fa-piggy-bank"></i>';
         }
 
+       
+
+        // Start the "Others Searched" section
+        $("table.others-search").append("<caption>" + 'Others Also Searched...' + '</caption>');
+        $("#others-search-table-head").append("<tr><th>Restaurant Name</th><th>City</th><th>Zip</th><tr>"); 
+        
         $('#details-page').append("<br>" +
         "<br>" + image + "<br>" +
         "<h3>" + detailsName + "</h3>" +
@@ -140,11 +147,8 @@ $(document).ready(function() {
         "<p> Make reservations <a href='" + detailsReserve + "'target='_blank'>here</a><br>");
     
         renderMap(detailsName, detailsCity, detailsZip);
+        $("body").animate({scrollTop:($("#details-page").first().offset().top)}, 1000); 
 
-        // Start the "Others Searched" section
-        $("table.others-search").append("<caption>" + 'Others Also Searched...' + '</caption>');
-        $("#others-search-table-head").append("<tr><th>Restaurant Name</th><th>City</th><th>Zip</th><tr>"); 
-        
         database.ref().limitToLast(10).on("child_added", function(childSnapshot) {
             const firebaseData = childSnapshot.val();
             $("#others-search-table-body").append("<tr><td>" + firebaseData.restName + "</td><td>" + firebaseData.city + "</td><td>" + firebaseData.zipCode + "</td></tr>");
